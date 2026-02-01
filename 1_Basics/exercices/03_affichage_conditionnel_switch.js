@@ -18,16 +18,16 @@ let result = prompt(
 console.log(result)
 switch(result) {
     case ("1") :
-        console.log("Le nom de la boutique est : " + name_store)
+        console.log(`Le nom de la boutique est : ${name_store}.`)
         break
     case ("2") :
-        console.log("Le nom du sorcier est : " + name_sorcier)
+        console.log(`Le nom du sorcier est : ${name_sorcier}`)
         break
     case ("3") :
-        console.log("Le stock de potion de type soin est de : " + stock_potion_care + " potions")
+        console.log(`Le stock de potion de type soin est de : ${stock_potion_care} potions`)
         break
     case ("4") :
-        console.log("Le prix d'une potion de type soin est de : " + price_potion_care + money )
+        console.log(`Le prix d'une potion de type soin est de : ${price_potion_care}${money}`)
         break
     default:
     console.log("Mh... Désolé aventurier, je ne comprends pas ce que tu souhaites. Refais ton choix ! 😕")
