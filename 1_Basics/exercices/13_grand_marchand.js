@@ -12,7 +12,7 @@ let max_prix = 0
 let max_stock = 0
 let cpt = 0
 
-for (let potion of inventaire) {
+for (letpotion of inventaire) {
 
   if (max_prix < potion.prix) {
     max_prix = potion.prix
