@@ -15,15 +15,17 @@ if (Number.isNaN(qte)) {
     var total_price = qte * price_potion_care
 }
 
+let new_Adventurer_Purse = 0
+
 if (remaining_stock < 0) {
     console.log("La quantité en stock n'est pas suffisante");
 } else if (remaining_stock >= 0) {
     console.log(`Le tarif est de ${total_price}${money}`);
-    var new_Adventurer_Purse = Adventurer_Purse - total_price
+        new_Adventurer_Purse = Adventurer_Purse - total_price
     if (new_Adventurer_Purse < 0) {
         console.log(`Votre bourse n'est pas assez remplie pour acheter ${qte} potions`)
         } else {
-            let new_Adventurer_Purse = Adventurer_Purse - total_price
+                new_Adventurer_Purse = Adventurer_Purse - total_price
             console.log(`Il vous reste ${new_Adventurer_Purse}${money} dans votre bourse`)
         }
 }
