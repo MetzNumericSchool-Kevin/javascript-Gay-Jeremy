@@ -30,6 +30,10 @@ const inventaire = [
 
 // ✍️ TON CODE ICI
 // Crée ta fonction salutations() ci-dessous
+function salutations(nom_sorcier) {
+  console.log(`Salutations Aventurier ! Je me nomme ${nom_sorcier} pour vous servir.`)
+}
+
 
 
 
@@ -47,6 +51,15 @@ const inventaire = [
 
 // ✍️ TON CODE ICI
 // Crée ta fonction calculerPrixTotal() ci-dessous
+function calculerPrixTotal(id_potion,inventaire,quantite) {
+  for (let potion of inventaire) {
+    if (potion.id === id_potion) {
+      return (potion.prix * quantite)
+    } else {
+      console.log("La potion n'est pas disponible en stock")
+    }
+  }
+}
 
 
 
