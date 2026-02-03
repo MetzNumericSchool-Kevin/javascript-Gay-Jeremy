@@ -10,7 +10,7 @@ console.log(potions[0])
 console.log(potions[potions.length - 1])
 
 // Avec boucle for
-for (potion of potions) {
+for (let potion of potions) {
     console.log(`Nous avons de la ${potion}`)
 }
 
