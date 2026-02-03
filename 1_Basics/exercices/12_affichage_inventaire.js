@@ -20,11 +20,17 @@ const potion_endurance = {
 }
 
 // Aventurier, regarde tout ce que je vends !
-inventaire.push(potion_soin,potion_mana,potion_soin)
+inventaire.push(potion_soin,potion_mana,potion_endurance)
 console.log(inventaire)
 for (potion of inventaire) {
-    console.log(`Nom : ${potion.nom}`
-                `Prix : ${potion.prix}`
-                `Stock : ${potion.stock}`
-    )
+    console.log(`Nom : ${potion.nom}
+Prix : ${potion.prix}
+Stock : ${potion.stock}`
+)
+}
+
+for (potion of inventaire) {
+    for (const [key, value] of Object.entries(potion)) {
+        console.log(`${key}: ${value}`);
+    }
 }
