@@ -22,6 +22,7 @@ const inventaire = [
 ];
 
 
+
 // ============================================
 // EXERCICE 1 : Salutation Aventurier
 // ============================================
@@ -79,7 +80,13 @@ function calculerPrixTotal(id_potion,inventaire,quantite) {
 // ✍️ TON CODE ICI
 // Crée ta fonction fabriquerPotion() ci-dessous
 
-
+function fabriquerPotion(id,prix=10,stock=1) {
+  return {
+    id,
+    prix,
+    stock
+  }
+}
 
 
 // 🧪 TESTS - Décommente pour tester
@@ -99,14 +106,31 @@ function calculerPrixTotal(id_potion,inventaire,quantite) {
 // ✍️ TON CODE ICI
 // Crée ta fonction ajouterPotion() ci-dessous
 
+function ajouterPotion(inventaire, potion) {
+  const item = inventaire.find(p => p.id === potion.id)
+
+  if (item) {
+    item.prix = potion.prix
+    item.stock += potion.stock
+
+  } else {
+    inventaire.push(potion)
+  }
+
+  inventaire.sort((item, potion) => potion.prix - item.prix);
+  return inventaire
+}
 
 
 
 // 🧪 TESTS - Décommente pour tester
 // console.log("=== EXERCICE 4 ===");
-// const nouvellePotion = fabriquerPotion("potion_mana", 20, 3);
-// ajouterPotion(inventaire, nouvellePotion);
-// console.log("Inventaire après ajout:", inventaire);
+
+const nouvellePotion = fabriquerPotion("potion_mana", 20, 3);
+ajouterPotion(inventaire, nouvellePotion);
+const nouvellePotion1 = fabriquerPotion("filtre_amour", 50, 5)
+ajouterPotion(inventaire, nouvellePotion1);
+console.log("Inventaire après ajout:", inventaire);
 
 
 // ============================================
@@ -118,14 +142,24 @@ function calculerPrixTotal(id_potion,inventaire,quantite) {
 // ✍️ TON CODE ICI
 // Crée tes fonctions getPotionsEnStock() et getPotionsEnRupture() ci-dessous
 
+function getPotionsEnStock(inventaire) {
+  const filtre_inventaire = inventaire.filter((potion) => potion.stock > 0)
+  return filtre_inventaire
+}
+
+function getPotionsEnRupture(inventaire) {
+  const filtre_inventaire = inventaire.filter((potion) => potion.stock == 0)
+  return filtre_inventaire
+}
 
 
 
 // 🧪 TESTS - Décommente pour tester
 // console.log("=== EXERCICE 5 ===");
-// console.log("Inventaire complet:", inventaire);
-// console.log("Potions en stock:", getPotionsEnStock(inventaire));
-// console.log("Potions en rupture:", getPotionsEnRupture(inventaire));
+console.log("Inventaire complet:", inventaire);
+console.log("Potions en stock:", getPotionsEnStock(inventaire));
+console.log("Potions en rupture:", getPotionsEnRupture(inventaire));
+console.log("Vérification Inventaire:", inventaire);
 
 
 // ============================================
@@ -138,25 +172,59 @@ function calculerPrixTotal(id_potion,inventaire,quantite) {
 // ✍️ TON CODE ICI
 // Crée ta fonction fabriquerPotionAvecIngredients() ci-dessous
 
+function fabriquerPotionAvecIngredients(id,ingredients,prix=10,stock=1) {
+
+  let trouve = false
+
+  for (let potion in manuel_de_fabrication) {
+    if (potion === id) {
+      trouve = true
+      break
+    }
+  }
+
+  if (!trouve) {
+      console.log("La potion n'est pas dans le manuel de fabrication")
+  }
+
+  let verif = false
+
+  if (trouve) {
+    for (let ingredient of manuel_de_fabrication[id].ingredients) {
+      verif = ingredients.some(p => p === ingredient)
+    }
+  }
+
+  if (verif) {
+    return {
+      id,
+      prix,
+      stock
+    }
+  } else {
+    return new Error('Il manque des ingrédients à cette potion')
+  }
+}
+
 
 
 
 // 🧪 TESTS - Décommente pour tester
-// console.log("=== EXERCICE 6 ===");
+console.log("=== EXERCICE 6 ===");
 // // Test avec tous les ingrédients
-// const resultat1 = fabriquerPotionAvecIngredients(
-//   "potion_soin",
-//   ["eau_de_source", "ecaille_de_dragon", "poudre_de_diamant"],
-//   10,
-//   1
-// );
-// if (resultat1 instanceof Error) {
-//   console.error(resultat1.message);
-// } else {
-//   console.log("✅ Potion créée:", resultat1);
-//   ajouterPotion(inventaire, resultat1);
-// }
-//
+// // const resultat1 = fabriquerPotionAvecIngredients(
+// //   "potion_soin",
+// //   ["eau_de_source", "ecaille_de_dragon", "poudre_de_diamant"],
+// //   10,
+// //   1
+// // );
+// // if (resultat1 instanceof Error) {
+// //   console.error(resultat1.message);
+// // } else {
+// //   console.log("✅ Potion créée:", resultat1);
+// //   ajouterPotion(inventaire, resultat1);
+// // }
+
 // // Test avec ingrédients manquants
 // const resultat2 = fabriquerPotionAvecIngredients(
 //   "potion_soin",
