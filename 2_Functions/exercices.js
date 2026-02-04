@@ -266,7 +266,7 @@ function fabriquerPotionAvecDelai(id,ingredients,callback,prix=10,stock=1) {
 
   if (trouve) {
     for (let ingredient of manuel_de_fabrication[id].ingredients) {
-      verif = !ingredients.find(p => p === ingredient) === undefined
+      verif = ingredients.find(p => p === ingredient) === undefined
     }
   }
 
@@ -316,19 +316,60 @@ if (erreur instanceof Error) {
 // ✍️ TON CODE ICI
 // Crée ta fonction creerInventaire() ci-dessous
 
+function creerInventaire() {
+  const inventaire = []; 
+
+  return {
+    ajouterPotion(potion) {
+      const item = inventaire.find(p => p.id === potion.id)
+
+      if (item) {
+        item.prix = potion.prix
+        item.stock += potion.stock
+
+      } else {
+        inventaire.push(potion)
+      }
+
+      inventaire.sort((item, potion) => potion.prix - item.prix);
+      return inventaire
+      },
+
+
+    getPotionsEnStock() {
+      for (potion of inventaire) {
+        if (potion.stock > 0) {
+          return potion.id
+        }
+      }
+
+      
+    },
+    getPotionsEnRupture() {
+      for (potion of inventaire) {
+        if (potion.stock == 0) {
+          return potion.id
+        }
+      }
+    },
+  };
+}
 
 
 
 // 🧪 TESTS - Décommente pour tester
-// console.log("=== EXERCICE 8 ===");
-// const boutiqueA = creerInventaire();
-// const boutiqueB = creerInventaire();
+console.log("=== EXERCICE 8 ===");
+const boutiqueA = creerInventaire();
+const boutiqueB = creerInventaire();
+
+
+boutiqueA.ajouterPotion(fabriquerPotion("potion_soin", 10, 5));
+boutiqueB.ajouterPotion(fabriquerPotion("potion_mana", 15, 0));
+
+
 //
-// boutiqueA.ajouterPotion(fabriquerPotion("potion_soin", 10, 5));
-// boutiqueB.ajouterPotion(fabriquerPotion("potion_mana", 15, 0));
-//
-// console.log("Boutique A - Potions en stock:", boutiqueA.getPotionsEnStock());
-// console.log("Boutique B - Potions en rupture:", boutiqueB.getPotionsEnRupture());
+console.log("Boutique A - Potions en stock:", boutiqueA.getPotionsEnStock());
+console.log("Boutique B - Potions en rupture:", boutiqueB.getPotionsEnRupture());
 
 
 // ============================================
