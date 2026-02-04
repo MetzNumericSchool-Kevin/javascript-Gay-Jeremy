@@ -191,7 +191,7 @@ function fabriquerPotionAvecIngredients(id,ingredients,prix=10,stock=1) {
 
   if (trouve) {
     for (let ingredient of manuel_de_fabrication[id].ingredients) {
-      verif = ingredients.some(p => p === ingredient)
+      verif = ingredients.find(p => p === ingredient) !== undefined
     }
   }
 
@@ -211,32 +211,32 @@ function fabriquerPotionAvecIngredients(id,ingredients,prix=10,stock=1) {
 
 // 🧪 TESTS - Décommente pour tester
 console.log("=== EXERCICE 6 ===");
-// // Test avec tous les ingrédients
-// // const resultat1 = fabriquerPotionAvecIngredients(
-// //   "potion_soin",
-// //   ["eau_de_source", "ecaille_de_dragon", "poudre_de_diamant"],
-// //   10,
-// //   1
-// // );
-// // if (resultat1 instanceof Error) {
-// //   console.error(resultat1.message);
-// // } else {
-// //   console.log("✅ Potion créée:", resultat1);
-// //   ajouterPotion(inventaire, resultat1);
-// // }
+// Test avec tous les ingrédients
+const resultat1 = fabriquerPotionAvecIngredients(
+  "potion_soin",
+  ["eau_de_source", "ecaille_de_dragon", "poudre_de_diamant"],
+  10,
+  1
+);
+if (resultat1 instanceof Error) {
+  console.error(resultat1.message);
+} else {
+  console.log("✅ Potion créée:", resultat1);
+  ajouterPotion(inventaire, resultat1);
+}
 
-// // Test avec ingrédients manquants
-// const resultat2 = fabriquerPotionAvecIngredients(
-//   "potion_soin",
-//   ["eau_de_source"],
-//   10,
-//   1
-// );
-// if (resultat2 instanceof Error) {
-//   console.error("❌", resultat2.message);
-// } else {
-//   console.log("✅ Potion créée:", resultat2);
-// }
+// Test avec ingrédients manquants
+const resultat2 = fabriquerPotionAvecIngredients(
+  "potion_soin",
+  ["eau_de_source"],
+  10,
+  1
+);
+if (resultat2 instanceof Error) {
+  console.error("❌", resultat2.message);
+} else {
+  console.log("✅ Potion créée:", resultat2);
+}
 
 
 // ============================================
@@ -248,30 +248,63 @@ console.log("=== EXERCICE 6 ===");
 
 // ✍️ TON CODE ICI
 // Crée ta fonction fabriquerPotionAvecDelai() ci-dessous
+function fabriquerPotionAvecDelai(id,ingredients,callback,prix=10,stock=1) {
+  let trouve = false
 
+  for (let potion in manuel_de_fabrication) {
+    if (potion === id) {
+      trouve = true
+      break
+    }
+  }
+
+  if (!trouve) {
+    return new Error("La potion n'est pas dans le manuel de fabrication")
+  }
+
+  let verif = false
+
+  if (trouve) {
+    for (let ingredient of manuel_de_fabrication[id].ingredients) {
+      verif = !ingredients.find(p => p === ingredient) === undefined
+    }
+  }
+
+  if (!verif) {
+    return new Error('Il manque des ingrédients à cette potion')
+  } else {
+    const tempsFabrication = manuel_de_fabrication[id].temps_de_fabrication;
+    setTimeout(() => {
+    // Code à exécuter après le délai
+      const potion = { id, prix, stock };
+      callback(potion); // On appelle le callback avec la potion
+  }, 
+  tempsFabrication * 1000); 
+  }
+}
 
 
 
 // 🧪 TESTS - Décommente pour tester
-// console.log("=== EXERCICE 7 ===");
-// function quandPotionPrete(potion) {
-//   console.log("✅ Fabrication terminée:", potion);
-//   ajouterPotion(inventaire, potion);
-// }
-//
-// const erreur = fabriquerPotionAvecDelai(
-//   "potion_soin",
-//   ["eau_de_source", "ecaille_de_dragon", "poudre_de_diamant"],
-//   quandPotionPrete,
-//   15,
-//   2
-// );
-//
-// if (erreur instanceof Error) {
-//   console.error(erreur.message);
-// } else {
-//   console.log("⏳ Fabrication en cours...");
-// }
+console.log("=== EXERCICE 7 ===");
+function quandPotionPrete(potion) {
+  console.log("✅ Fabrication terminée:", potion);
+  ajouterPotion(inventaire, potion);
+}
+
+const erreur = fabriquerPotionAvecDelai(
+  "potion_soin",
+  ["eau_de_source", "", "poudre_de_diamant"],
+  quandPotionPrete,
+  15,
+  2
+);
+
+if (erreur instanceof Error) {
+  console.error(erreur.message);
+} else {
+  console.log("⏳ Fabrication en cours...");
+}
 
 
 // ============================================
