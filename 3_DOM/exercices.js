@@ -7,6 +7,9 @@
 // ✍️ TON CODE ICI
 // Sélectionne le <h1> et affiche son texte dans la console
 
+const titre = document.querySelector('h1')
+console.log(titre.textContent)
+
 // ============================================
 // EXERCICE 2 : Des informations manquent !
 // ============================================
@@ -15,6 +18,11 @@
 
 // ✍️ TON CODE ICI
 // Crée un nouveau paragraphe et ajoute-le dans #description_boutique
+
+const conteneurDescription = document.querySelector("#description_boutique")
+const nouveauParagraphe = document.createElement("p")
+nouveauParagraphe.textContent = "Pour cela, il vous suffit de cliquer sur une des potions de la liste ci-dessous pour l'acheter."
+conteneurDescription.appendChild(nouveauParagraphe)
 
 // ============================================
 // EXERCICE 3 : Roger, enfoiré !
@@ -25,6 +33,9 @@
 // ✍️ TON CODE ICI
 // Supprime le <span id="blague_de_roger_le_sorcier">
 
+const elementDelete = document.querySelector("#blague_de_roger_le_sorcier")
+elementDelete.remove()
+
 // ============================================
 // EXERCICE 4 : Archibald n'est pas là, appelons-le !
 // ============================================
@@ -33,6 +44,11 @@
 
 // ✍️ TON CODE ICI
 // Ajoute un événement 'click' sur le bouton #call_archibald
+
+const button = document.querySelector("#call_archibald")
+button.addEventListener('click', function () {
+  alert("🧙‍♂️ J'arrive, j'arrive Aventurier !")
+})
 
 // ============================================
 // EXERCICE 5 : Faisons un peu de magie 🪄
@@ -43,6 +59,25 @@
 // ✍️ TON CODE ICI
 // Récupère toutes les boîtes et les boutons de couleur
 // Ajoute des événements pour changer les couleurs
+
+const listBoite = document.querySelectorAll('.boite')
+const buttonRed = document.querySelector("#btn_change_red")
+const buttonBlue = document.querySelector("#btn_change_blue")
+const buttonGreen = document.querySelector("#btn_change_green")
+
+buttonRed.addEventListener('click', function () {
+  listBoite[0].style.backgroundColor = "red"
+})
+
+buttonBlue.addEventListener('click', function() {
+  listBoite[1].style.backgroundColor = "blue"
+})
+
+buttonGreen.addEventListener('click', function() {
+  listBoite[0].style.backgroundColor = "green",
+  listBoite[1].style.backgroundColor = "green"
+  listBoite[2].style.backgroundColor = "green"
+})
 
 // ============================================
 // EXERCICE 6 : Aventurier, voici ma boutique !
@@ -70,6 +105,21 @@ const potions = [
 // Crée une fonction pour afficher une potion à partir du template
 // Parcours le tableau potions et affiche chaque potion
 
+const conteneurPotion = document.querySelector('#liste_potions')
+const templatePotion = document.querySelector('#template_potion')
+
+potions.forEach((potion) => {
+
+  const clone = templatePotion.content.cloneNode(true)
+
+  clone.querySelector(".nom_potion").textContent = potion.nom
+  clone.querySelector(".prix_potion").textContent = potion.prix
+  clone.querySelector(".description_potion").textContent = potion.description
+
+  conteneurPotion.appendChild(clone)
+
+});
+
 // ============================================
 // EXERCICE 7 : Plus de potions, nous avons besoin de plus de potions !
 // ============================================
@@ -80,6 +130,37 @@ const potions = [
 // Récupère le formulaire et gère l'événement 'submit'
 // Utilise FormData pour extraire les valeurs
 // Réutilise la fonction de l'exercice 6 pour ajouter la nouvelle potion
+
+
+function afficherPotion(potion) {
+
+  const conteneurPotion = document.querySelector('#liste_potions')
+  const templatePotion = document.querySelector('#template_potion')
+  const clone = templatePotion.content.cloneNode(true)
+
+  clone.querySelector(".nom_potion").textContent = potion.nom
+  clone.querySelector(".prix_potion").textContent = potion.prix
+  clone.querySelector(".description_potion").textContent = potion.description
+
+  conteneurPotion.appendChild(clone)
+
+};
+
+const formulaire = document.querySelector("form")
+
+formulaire.addEventListener('submit', function(event) {
+  event.preventDefault();
+
+  const formData = new FormData(formulaire)
+  const nouvellePotion = {
+  nom: formData.get("nom"),
+  description: formData.get("description"),
+  prix: formData.get("prix"),
+
+  };
+
+  afficherPotion(nouvellePotion);
+})
 
 // ============================================
 // EXERCICE 8 : Le Miroir Magique 🪞
@@ -92,6 +173,23 @@ const potions = [
 // Utilise mouseenter et mouseleave pour détecter le survol
 // Utilise classList.remove() et classList.add() pour afficher le reflet
 
+const miroir = document.querySelector("#magic-mirror");
+const texte = document.querySelector(".mirror-text");
+const reflet = document.querySelector(".mirror-reflection");
+
+miroir.addEventListener("mouseenter", () => {
+
+  reflet.classList.remove("hidden");
+
+});
+
+miroir.addEventListener("mouseleave", () => {
+
+  reflet.classList.add("hidden");
+
+});
+
+
 // ============================================
 // EXERCICE 9 : L'Arbre Généalogique des Potions 🌳
 // ============================================
@@ -102,6 +200,35 @@ const potions = [
 // Sélectionne toutes les catégories de potions
 // Pour chaque catégorie, trouve la liste (children)
 // Ajoute la classe 'first' au premier item et 'last' au dernier item
+
+const category = document.querySelectorAll('.potion-category')
+const firstCategory = category[0]
+const secondCategory = category[1]
+
+const list1 = firstCategory.children
+const list2 = secondCategory.children
+
+const items1 = firstCategory.querySelectorAll('.potion-item')
+items1[0].classList.add('first')
+items1[items1.length - 1].classList.add('last')
+
+const items2 = secondCategory.querySelectorAll('.potion-item')
+items2[0].classList.add('first')
+items2[items2.length - 1].classList.add('last')
+
+// AVEC BOUCLE FOR
+// const categories = document.querySelectorAll('.potion-category');
+
+// for (let i = 0; i < categories.length; i++) {
+//   const category = categories[i];
+//   const items = category.querySelectorAll('.potion-item');
+
+//   if (items.length > 0) {
+//     items[0].classList.add('first'); // premier élément
+//     items[items.length - 1].classList.add('last'); // dernier élément
+//   }
+// }
+
 
 // ============================================
 // EXERCICE 10 : Les Étiquettes Magiques 🏷️
