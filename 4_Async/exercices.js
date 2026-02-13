@@ -8,69 +8,69 @@ const localisationEpoqueHTML = document.querySelector(".localisation_epoque");
 const listeArtefactHTML = document.querySelector(".liste_artefacts");
 const formChoixEpoqueHtml = document.querySelector(".form__choix_epoque");
 const formRechercheArtefact = document.querySelector(
-  ".form__recherche_artefact",
+	".form__recherche_artefact",
 );
 
 const creerLesChoixEpoque = (epoques) => {
-  const selectHtml = formChoixEpoqueHtml.querySelector("select");
-  Object.entries(epoques).forEach(([id_epoque, nom_epoque]) => {
-    const option = document.createElement("option");
-    option.value = id_epoque;
-    option.text = nom_epoque;
-    selectHtml.appendChild(option);
-  });
+	const selectHtml = formChoixEpoqueHtml.querySelector("select");
+	Object.entries(epoques).forEach(([id_epoque, nom_epoque]) => {
+		const option = document.createElement("option");
+		option.value = id_epoque;
+		option.text = nom_epoque;
+		selectHtml.appendChild(option);
+	});
 };
 
 function generationNombreAleatoireEntre(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
+	return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
 // Permet d'afficher l'époque de destination du voyage
 const afficherDestination = (nomEpoque) =>
-  (localisationEpoqueHTML.textContent = nomEpoque);
+	(localisationEpoqueHTML.textContent = nomEpoque);
 
 // Permet d'afficher un artefact trouvée, ou non, à une époque
 const afficherRechercheArtefact = ({ artefact, epoque, success = true }) => {
-  const li = document.createElement("li");
-  li.textContent = `${success ? "✅" : "❌"} ${artefact} (Epoque ${epoque})`;
-  listeArtefactHTML.appendChild(li);
+	const li = document.createElement("li");
+	li.textContent = `${success ? "✅" : "❌"} ${artefact} (Epoque ${epoque})`;
+	listeArtefactHTML.appendChild(li);
 };
 
 // Execution
 
 // Gestion envoi formulaire choix époque
 formChoixEpoqueHtml.addEventListener("submit", (event) => {
-  event.preventDefault();
-  const epoque = new FormData(formChoixEpoqueHtml).get("epoque");
+	event.preventDefault();
+	const epoque = new FormData(formChoixEpoqueHtml).get("epoque");
 
-  if (!epoque) {
-    alert("Choisie une époque de voyage temporel Chronos !");
-    return;
-  }
+	if (!epoque) {
+		alert("Choisie une époque de voyage temporel Chronos !");
+		return;
+	}
 
-  quandEpoqueChoisie(epoque);
+	quandEpoqueChoisie(epoque);
 });
 
 // Gestion envoi formulaire recherche artelefact
 formRechercheArtefact.addEventListener("submit", (event) => {
-  event.preventDefault();
-  const artefact = new FormData(formRechercheArtefact).get("artefact");
-  quandRechercheArtefact(artefact);
+	event.preventDefault();
+	const artefact = new FormData(formRechercheArtefact).get("artefact");
+	quandRechercheArtefact(artefact);
 });
 
 /**
  * Votre partie commence ici, la partie modifiable par vos soins
  */
 function main() {
-  // Sera modifié par le dernier exercice
-  const epoques = {
-    romaine: "Romaine",
-    medievale: "Médievale",
-    jurassique: "Jurassique",
-  };
+	// Sera modifié par le dernier exercice
+	const epoques = {
+		romaine: "Romaine",
+		medievale: "Médievale",
+		jurassique: "Jurassique",
+	};
 
-  // Création dynamique des époques de destination de la machine temporelle
-  creerLesChoixEpoque(epoques);
+	// Création dynamique des époques de destination de la machine temporelle
+	creerLesChoixEpoque(epoques);
 }
 
 main();
@@ -88,20 +88,36 @@ let nomEpoqueActuelle;
 // Crée la fonction voyagerTemps(destination, callback)
 // Utilise setTimeout() avec generationNombreAleatoireEntre(1000, 3000)
 function voyagerTemps(destination, callback) {
-
+	console.log("Voyage en cours vers : ", destination);
+	setTimeout(
+		function () {
+			console.log("Arrivée à l'époque :", destination);
+      callback(destination);
+		},
+		generationNombreAleatoireEntre(1000, 3000),
+	);
 }
 
 // Fonction appelée quand le formulaire de voyage temporel est envoyé
 function quandEpoqueChoisie(nomEpoque) {
-  nomEpoqueActuelle = nomEpoque;
-  console.log(nomEpoqueActuelle);
+	nomEpoqueActuelle = nomEpoque;
+	console.log(nomEpoqueActuelle);
 
-  // ✍️ TON CODE ICI
-  // Utilise voyagerTemps() ici
-  // Avant le voyage : cache .localisation_epoque et affiche .voyage_en_cours
-  // Après le voyage (callback) : cache le loader et appelle afficherDestination()
+	// ✍️ TON CODE ICI
+	// Utilise voyagerTemps() ici
+	// Avant le voyage : cache .localisation_epoque et affiche .voyage_en_cours
+	// Après le voyage (callback) : cache le loader et appelle afficherDestination()
+	localisationEpoqueHTML.style.display = "none";
 
-voyagerTemps(quandEpoqueChoisie)
+	const voyage_en_cours = document.querySelector(".voyage_en_cours");
+
+	voyage_en_cours.style.display = "";
+
+	voyagerTemps(nomEpoque, function(destination) {
+		voyage_en_cours.style.display = "none";
+		afficherDestination(destination);
+    localisationEpoqueHTML.style.display = '';
+});
 }
 
 // ============================================
@@ -114,14 +130,35 @@ voyagerTemps(quandEpoqueChoisie)
 // Crée la fonction collecterArtefact(nomArtefact, callback)
 // Le callback reçoit true ou false selon le succès
 
+
+function collecterArtefact(nomArtefact, callback) {
+
+  setTimeout(function() {
+      const number = Math.random() * 100;
+      if (number >= 50) {
+        callback(true);
+      } else {
+        callback(false);
+      }
+    }, generationNombreAleatoireEntre(1000, 3000));
+}
+
 // Fonction appelée quand le formulaire de recherche d'artefact est envoyé
 function quandRechercheArtefact(artefact) {
-  console.log(artefact);
+	console.log(artefact);
 
-  // ✍️ TON CODE ICI
-  // Utilise collecterArtefact() ici
-  // Avant : affiche .recherche_en_cours
-  // Après (callback) : cache le loader et appelle afficherRechercheArtefact()
+	// ✍️ TON CODE ICI
+	// Utilise collecterArtefact() ici
+	// Avant : affiche .recherche_en_cours
+	// Après (callback) : cache le loader et appelle afficherRechercheArtefact()
+  const recherche = document.querySelector('.recherche_en_cours');
+
+  recherche.style.display = '';
+
+  collecterArtefact(artefact, function(success) {
+    recherche.style.display = 'none';
+    afficherRechercheArtefact({ artefact: artefact, epoque: nomEpoqueActuelle, success : success });
+  });
 }
 
 // ============================================

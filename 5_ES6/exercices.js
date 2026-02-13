@@ -6,30 +6,30 @@
 
 // Exercice 1.1 : Transforme la concaténation en interpolation de chaîne de caractères avec les backticks `
 function afficheAddresse(address) {
-  return (
-    "Votre adresse est : " +
-    address.street +
-    ", " +
-    address.city +
-    ", " +
-    address.country +
-    "."
-  );
+	return (
+		"Votre adresse est : " +
+		address.street +
+		", " +
+		address.city +
+		", " +
+		address.country +
+		"."
+	);
 }
 
 console.log("Exercice 1.1");
 console.log(
-  afficheAddresse({
-    street: "10 rue de la republique",
-    city: "Paris",
-    country: "France",
-  }),
+	afficheAddresse({
+		street: "10 rue de la republique",
+		city: "Paris",
+		country: "France",
+	}),
 );
 
 // Exercice 1.2 : Utilise les chaînes multilignes avec les backticks ` pour afficher plus simplement le menu
 console.log("Exercice 1.2");
 console.log(
-  "Menu de la semaine :\n    - Pâte à tartine\n    - Hoagie\n    - Salade de pommes",
+	"Menu de la semaine :\n    - Pâte à tartine\n    - Hoagie\n    - Salade de pommes",
 );
 
 // ============================================
@@ -59,25 +59,25 @@ console.log(green2, blue2);
 // ------ Version objet
 
 const roman = {
-  title: "Solo Leveling",
-  editor: "kbooks",
-  tome: 12,
-  type: "fantasy",
-  author: "Chugong",
-  mainCharacter: {
-    name: "Sung Jinwoo",
-    animeJapaneseVoice: "Taito Ban",
-  },
-  characters: [
-    {
-      name: "Sung Jinah",
-      animeJapaneseVoice: "Haruna Mikawa",
-    },
-    {
-      name: "Go Gunhee",
-      animeJapaneseVoice: "Banjō Ginga",
-    },
-  ],
+	title: "Solo Leveling",
+	editor: "kbooks",
+	tome: 12,
+	type: "fantasy",
+	author: "Chugong",
+	mainCharacter: {
+		name: "Sung Jinwoo",
+		animeJapaneseVoice: "Taito Ban",
+	},
+	characters: [
+		{
+			name: "Sung Jinah",
+			animeJapaneseVoice: "Haruna Mikawa",
+		},
+		{
+			name: "Go Gunhee",
+			animeJapaneseVoice: "Banjō Ginga",
+		},
+	],
 };
 
 // Exercices 2.3 : Décompose l'objet pour récupérer le titre, l'éditeur et le tome dans des constantes
@@ -97,9 +97,9 @@ const thirdCharacterJapaneseVoice = roman.characters[1].animeJapaneseVoice;
 
 console.log("Exercice 2.4");
 console.log(
-  mainCharacterName,
-  secondCharacterName,
-  thirdCharacterJapaneseVoice,
+	mainCharacterName,
+	secondCharacterName,
+	thirdCharacterJapaneseVoice,
 );
 
 // ------
@@ -118,15 +118,15 @@ console.log(firstname, lastname);
 
 // ------
 const person = {
-  firstname,
-  lastname,
-  age: 30,
-  location: "Paris",
+	firstname,
+	lastname,
+	age: 30,
+	location: "Paris",
 };
 
 // Exercice 2.6 : Fais une décomposition du paramètre pour extraire directement le prénom et le nom
 function hello(person) {
-  console.log(`Bonjour ${person.firstname} ${person.lastname} !`);
+	console.log(`Bonjour ${person.firstname} ${person.lastname} !`);
 }
 
 console.log("Exercice 2.6");
@@ -170,7 +170,7 @@ console.log(Math.min(12, 13, 52, 68, 2, 23, 5));
 // Exercice 3.4 : Transforme cette fonction pour qu'elle puisse prendre
 // un nombre indéfini de paramètres car actuellement elle en prend que 3
 function min(a, b, c) {
-  return Math.min(a, b, c);
+	return Math.min(a, b, c);
 }
 
 console.log("Exercice 3.4");
@@ -198,9 +198,9 @@ console.log(rainbow);
 
 // Exercice 4.3 : Copier l'adresse en ajoutant une nouvelle clé pour le code postal
 const adress = {
-  street: "10 rue de la republique",
-  city: "Paris",
-  country: "France",
+	street: "10 rue de la republique",
+	city: "Paris",
+	country: "France",
 };
 
 const completeAdress = Object.assign({}, adress, { postalCode: 75001 });
@@ -222,7 +222,7 @@ console.log(person2);
 
 // Exercice 5.1 : Convertir en fonction fléchée
 const thatsAllFolks = function () {
-  console.log("That's all folks!");
+	console.log("That's all folks!");
 };
 
 console.log("Exercice 5.1");
@@ -231,10 +231,10 @@ thatsAllFolks();
 // Exercice 5.2 : Convertir toutes les fonctions en fonction fléchée
 // Et si c'est possible, faire un return implicite
 const makeDouble = function (numbers) {
-  return numbers.map(function (number) {
-    const newNumber = number * 2;
-    return newNumber;
-  });
+	return numbers.map(function (number) {
+		const newNumber = number * 2;
+		return newNumber;
+	});
 };
 
 console.log("Exercice 5.2");
@@ -242,10 +242,10 @@ console.log(makeDouble([1, 2, 3]));
 
 // Exercice 5.3 : Convertir en fonction fléchée avec un return implicite
 function convertToPerson(firstnameLastnameTuple) {
-  return {
-    firstname: firstnameLastnameTuple[0],
-    lastname: firstnameLastnameTuple[1],
-  };
+	return {
+		firstname: firstnameLastnameTuple[0],
+		lastname: firstnameLastnameTuple[1],
+	};
 }
 
 console.log("Exercice 5.3");
@@ -260,10 +260,10 @@ console.log(convertToPerson(["John", "Doe"]));
 // Exercice 6 : raccourci l'assignation à l'objet
 
 function convertToPerson2([firstname, lastname]) {
-  return {
-    firstname: firstname,
-    lastname: lastname,
-  };
+	return {
+		firstname: firstname,
+		lastname: lastname,
+	};
 }
 
 console.log("Exercice 6");
@@ -285,43 +285,43 @@ console.log(convertToPerson2(["John", "Doe"]));
 const cart = [];
 
 function addToCart(productInfo, quantity = 1) {
-  const cartLine = findItemInCart(productInfo.product);
+	const cartLine = findItemInCart(productInfo.product);
 
-  if (cartLine) {
-    cartLine.quantity += quantity;
-    return;
-  }
+	if (cartLine) {
+		cartLine.quantity += quantity;
+		return;
+	}
 
-  cart.push({ ...productInfo, quantity });
+	cart.push({ ...productInfo, quantity });
 }
 
 function findItemInCart(productName) {
-  return cart.find((cartLine) => cartLine.product === productName);
+	return cart.find((cartLine) => cartLine.product === productName);
 }
 
 function updateCartQuantity(productName, quantity) {
-  const cartLine = findItemInCart(productName);
+	const cartLine = findItemInCart(productName);
 
-  if (!cartLine) {
-    addToCart(productName, quantity);
-    return;
-  }
+	if (!cartLine) {
+		addToCart(productName, quantity);
+		return;
+	}
 
-  cartLine.quantity = quantity;
+	cartLine.quantity = quantity;
 }
 
 function computeTotal() {
-  return cart.reduce(
-    (total, cartLine) => total + cartLine.quantity * cartLine.price,
-    0,
-  );
+	return cart.reduce(
+		(total, cartLine) => total + cartLine.quantity * cartLine.price,
+		0,
+	);
 }
 
 function displayAmount(amount) {
-  return Intl.NumberFormat("fr-FR", {
-    style: "currency",
-    currency: "EUR",
-  }).format(amount);
+	return Intl.NumberFormat("fr-FR", {
+		style: "currency",
+		currency: "EUR",
+	}).format(amount);
 }
 
 console.log("Exercice 7");
@@ -350,17 +350,17 @@ console.log(displayAmount(computeTotal()));
 // Exercice 8 : Transforme les opérations asynchrone avec la syntaxe async/await
 
 function loadFruits() {
-  return fetch("http://127.0.0.1:5500/data/fruits.json").then((response) =>
-    response.json(),
-  );
+	return fetch("http://127.0.0.1:5500/data/fruits.json").then((response) =>
+		response.json(),
+	);
 }
 
 function program() {
-  loadFruits()
-    .then((fruits) => console.log(fruits))
-    .catch((error) =>
-      console.log("Problème lors du chargement des fruits", error),
-    );
+	loadFruits()
+		.then((fruits) => console.log(fruits))
+		.catch((error) =>
+			console.log("Problème lors du chargement des fruits", error),
+		);
 }
 
 console.log("Exercice 8");

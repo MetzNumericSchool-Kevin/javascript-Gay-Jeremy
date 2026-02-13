@@ -201,20 +201,20 @@ miroir.addEventListener("mouseleave", () => {
 // Pour chaque catégorie, trouve la liste (children)
 // Ajoute la classe 'first' au premier item et 'last' au dernier item
 
-const category = document.querySelectorAll('.potion-category')
-const firstCategory = category[0]
-const secondCategory = category[1]
+// const category = document.querySelectorAll('.potion-category')
+// const firstCategory = category[0]
+// const secondCategory = category[1]
 
-const list1 = firstCategory.children
-const list2 = secondCategory.children
+// const list1 = firstCategory.children
+// const list2 = secondCategory.children
 
-const items1 = firstCategory.querySelectorAll('.potion-item')
-items1[0].classList.add('first')
-items1[items1.length - 1].classList.add('last')
+// const items1 = firstCategory.querySelectorAll('.potion-item')
+// items1[0].classList.add('first')
+// items1[items1.length - 1].classList.add('last')
 
-const items2 = secondCategory.querySelectorAll('.potion-item')
-items2[0].classList.add('first')
-items2[items2.length - 1].classList.add('last')
+// const items2 = secondCategory.querySelectorAll('.potion-item')
+// items2[0].classList.add('first')
+// items2[items2.length - 1].classList.add('last')
 
 // AVEC BOUCLE FOR
 // const categories = document.querySelectorAll('.potion-category');
@@ -229,6 +229,15 @@ items2[items2.length - 1].classList.add('last')
 //   }
 // }
 
+// BOUCLE FOREACH
+
+const category = document.querySelectorAll('.potion-category')
+category.forEach((element) => {
+  const liste = element.querySelectorAll('.potion-item')
+  liste[0].classList.add('first')
+  liste[liste.length - 1].classList.add('last')
+})
+
 
 // ============================================
 // EXERCICE 10 : Les Étiquettes Magiques 🏷️
@@ -242,6 +251,30 @@ items2[items2.length - 1].classList.add('last')
 // Récupère les data attributes de la potion parente
 // Affiche les infos dans la div .potion-info
 
+
+
+const buttons = document.querySelectorAll(`.show-info`)
+
+buttons.forEach((element) => {
+
+  element.addEventListener('click', () =>  {
+
+    const parents = element.closest('.labeled-potion')
+
+    nouveauParagraphe.innerHTML = `
+    Rareté : ${parents.dataset.rarete}<br>
+    Effets secondaires : ${parents.dataset.effetSecondaire}<br>
+    Durée ${parents.dataset.duree}`
+
+    potion_info = parents.lastElementChild.querySelector('.potion-info')
+    potion_info.appendChild(nouveauParagraphe)
+
+    potion_info.classList.toggle('hidden')
+
+  })
+})
+
+
 // ============================================
 // EXERCICE 11 : Validation Magique en Temps Réel ✨
 // ============================================
@@ -254,6 +287,42 @@ items2[items2.length - 1].classList.add('last')
 // Valide le champ (min 3 caractères pour texte, > 0 pour prix)
 // Ajoute les classes 'valid' ou 'invalid' et affiche un message
 // Active/désactive le bouton submit selon la validité globale
+
+const champ_name = document.querySelector(`#potion-name`)
+const champ_price = document.querySelector(`#potion-price`)
+const champ_ingredient = document.querySelector(`#potion-ingredient`) 
+const submitButton = document.querySelector('.mt-3')
+const parents = champ_name.closest('.form-group')
+
+champ_name.addEventListener('input', () => {
+  
+
+  const message_name = parents.lastElementChild
+  if (champ_name.value.length < 3) {
+    champ_name.classList.remove('valid')
+    champ_name.classList.add('invalid')
+    message_name.innerHTML = "Saisie invalide"
+  } else {
+    champ_name.classList.remove('invalid')
+    champ_name.classList.add('valid')
+    message_name.innerHTML ="Saisie valide"
+  }
+})
+
+champ_price.addEventListener('input', () => {
+  const message_price = document.querySelector(`.validation-feedback`)
+  if (champ_price.value <= 0) {
+  champ_price.classList.remove('valid')
+  champ_price.classList.add('invalid')
+  message_price.innerHTML = "Saisie Invalide"
+  } else {
+    champ_price.classList.remove('invalid')
+    champ_price.classList.add('valid')
+    message_price.innerHTML = "Saisie valide"
+  }
+  
+})
+
 
 // ============================================
 // EXERCICE 12 : Calculateur de Commande 🧮

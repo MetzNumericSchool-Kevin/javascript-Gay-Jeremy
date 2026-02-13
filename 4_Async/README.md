@@ -30,6 +30,7 @@ L'**asynchrone** permet d'exécuter des tâches qui prennent du temps (requêtes
 ### Concepts clés
 
 **1. Callbacks**
+
 ```js
 function faireQuelqueChose(callback) {
   setTimeout(() => {
@@ -44,6 +45,7 @@ faireQuelqueChose(() => {
 ```
 
 **2. Promesses**
+
 ```js
 const promesse = new Promise((resolve, reject) => {
   setTimeout(() => {
@@ -52,11 +54,12 @@ const promesse = new Promise((resolve, reject) => {
 });
 
 promesse
-  .then(resultat => console.log(resultat))
-  .catch(erreur => console.log(erreur));
+  .then((resultat) => console.log(resultat))
+  .catch((erreur) => console.log(erreur));
 ```
 
 **3. Async/Await**
+
 ```js
 async function maFonction() {
   try {
@@ -69,11 +72,12 @@ async function maFonction() {
 ```
 
 **4. Fetch API**
+
 ```js
-fetch('https://api.example.com/data')
-  .then(response => response.json())
-  .then(data => console.log(data))
-  .catch(erreur => console.log(erreur));
+fetch("https://api.example.com/data")
+  .then((response) => response.json())
+  .then((data) => console.log(data))
+  .catch((erreur) => console.log(erreur));
 ```
 
 💡 **Astuce** : Utilise toujours la console du navigateur pour observer l'ordre d'exécution du code asynchrone !
@@ -96,20 +100,37 @@ Tu es **Chronos** 🕰️, un voyageur temporel qui explore différentes époque
 
 **Consignes** :
 
-1. **Crée la fonction `voyagerTemps(destination, callback)`** :
-   - Paramètre 1 : `destination` (string) - le nom de l'époque
-   - Paramètre 2 : `callback` (function) - fonction à exécuter après le voyage
-   - Utilise `setTimeout()` avec un délai aléatoire entre 1000 et 3000 ms
-   - Utilise `generationNombreAleatoireEntre(1000, 3000)` pour le délai
-   - Affiche `console.log("Voyage en cours vers : ", destination)` au début
-   - Affiche `console.log("Arrivée à l'époque : ", destination)` à la fin
-   - Appelle le `callback` quand le voyage est terminé
+**Partie 1 : Crée une nouvelle fonction `voyagerTemps(destination, callback)`**
 
-2. **Utilise cette fonction dans `quandEpoqueChoisie(nomEpoque)`** :
-   - Avant le voyage : cache `.localisation_epoque` et affiche `.voyage_en_cours` (loader)
-   - Après le voyage (dans le callback) : cache le loader et appelle `afficherDestination(nomEpoque)`
+Cette fonction simule un voyage dans le temps qui prend du temps.
+
+- **Paramètres** :
+  - `destination` (string) : le nom de l'époque (ex: "medievale", "romaine")
+  - `callback` (function) : fonction à exécuter quand le voyage est terminé
+
+- **Dans le corps de la fonction** :
+  1. Affiche immédiatement : `console.log("Voyage en cours vers : ", destination)`
+  2. Utilise `setTimeout()` pour simuler le délai du voyage :
+     - Délai aléatoire : utilise `generationNombreAleatoireEntre(1000, 3000)` (fonction déjà fournie)
+     - Dans le `setTimeout`, après le délai :
+       - Affiche : `console.log("Arrivée à l'époque : ", destination)`
+       - Appelle le `callback()` pour signaler que le voyage est terminé
+
+**Partie 2 : Utilise ta fonction dans `quandEpoqueChoisie(nomEpoque)` (fonction existante à modifier)**
+
+Cette fonction est déjà définie dans le code de base. Tu dois la compléter pour utiliser `voyagerTemps()`.
+
+- **Avant d'appeler `voyagerTemps()`** :
+  - Cache l'élément `.localisation_epoque` (utilise `.style.display = "none"`)
+  - Affiche l'élément `.voyage_en_cours` (loader) (utilise `.style.display = ""`)
+
+- **Appelle `voyagerTemps(nomEpoque, callback)`** :
+  - Le callback doit :
+    - Cacher le loader `.voyage_en_cours`
+    - Appeler `afficherDestination(nomEpoque)` (fonction déjà fournie)
 
 💡 **Ce que tu vas apprendre** :
+
 - Callbacks : fonctions passées en paramètre et exécutées plus tard
 - `setTimeout()` : exécute du code après un délai
 - Manipulation du DOM pendant une tâche asynchrone
@@ -118,6 +139,7 @@ Tu es **Chronos** 🕰️, un voyageur temporel qui explore différentes époque
 💡 **Astuce** : Pour cacher un élément, utilise `element.style.display = "none"`. Pour l'afficher, utilise `element.style.display = ""` ou `"block"`.
 
 💡 **Résultat attendu** :
+
 ```
 Page : Quand tu choisis une époque et cliques sur "Voyager", un loader apparaît puis l'époque s'affiche
 Console : "Voyage en cours vers : medievale" puis "Arrivée à l'époque : medievale"
@@ -135,19 +157,36 @@ Console : "Voyage en cours vers : medievale" puis "Arrivée à l'époque : medie
 
 **Consignes** :
 
-1. **Crée la fonction `collecterArtefact(nomArtefact, callback)`** :
-   - Paramètre 1 : `nomArtefact` (string)
-   - Paramètre 2 : `callback` (function qui reçoit un booléen)
-   - Utilise `setTimeout()` avec un délai aléatoire
-   - Génère un nombre aléatoire : `Math.random() * 100`
-   - Si le nombre est >= 50 : appelle `callback(true)` (succès)
-   - Si le nombre est < 50 : appelle `callback(false)` (échec)
+**Partie 1 : Crée une nouvelle fonction `collecterArtefact(nomArtefact, callback)`**
 
-2. **Utilise cette fonction dans `quandRechercheArtefact(artefact)`** :
-   - Avant la collecte : affiche `.recherche_en_cours` (loader)
-   - Après la collecte (dans le callback) : cache le loader et appelle `afficherRechercheArtefact({ artefact, epoque: nomEpoqueActuelle, success })`
+Cette fonction simule la collecte d'un artefact avec 50% de chances de succès.
+
+- **Paramètres** :
+  - `nomArtefact` (string) : le nom de l'artefact à collecter
+  - `callback` (function) : fonction à exécuter après la collecte, qui reçoit un booléen (true = succès, false = échec)
+
+- **Dans le corps de la fonction** :
+  1. Utilise `setTimeout()` avec un délai aléatoire (utilise `generationNombreAleatoireEntre(1000, 3000)`)
+  2. Dans le `setTimeout`, après le délai :
+     - Génère un nombre aléatoire : `Math.random() * 100`
+     - **Si le nombre >= 50** : appelle `callback(true)` (collecte réussie)
+     - **Si le nombre < 50** : appelle `callback(false)` (collecte échouée)
+
+**Partie 2 : Utilise ta fonction dans `quandRechercheArtefact(artefact)` (fonction existante à modifier)**
+
+Cette fonction est déjà définie dans le code de base. Tu dois la compléter.
+
+- **Avant d'appeler `collecterArtefact()`** :
+  - Affiche l'élément `.recherche_en_cours` (loader)
+
+- **Appelle `collecterArtefact(artefact, callback)`** :
+  - Le callback reçoit un paramètre `success` (true ou false)
+  - Dans le callback :
+    - Cache le loader `.recherche_en_cours`
+    - Appelle `afficherRechercheArtefact({ artefact, epoque: nomEpoqueActuelle, success })` (fonction déjà fournie)
 
 💡 **Ce que tu vas apprendre** :
+
 - Callbacks avec paramètres
 - Gestion de résultats aléatoires
 - Passage de données entre fonction asynchrone et callback
@@ -155,6 +194,7 @@ Console : "Voyage en cours vers : medievale" puis "Arrivée à l'époque : medie
 💡 **Astuce** : Le callback peut recevoir des paramètres. Exemple : `callback(true)` ou `callback(false)`.
 
 💡 **Résultat attendu** :
+
 ```
 Page : Quand tu recherches un artefact, un loader apparaît puis l'artefact s'affiche avec ✅ ou ❌
 ```
@@ -171,17 +211,26 @@ Page : Quand tu recherches un artefact, un loader apparaît puis l'artefact s'af
 
 **Consignes** :
 
-1. **Crée la fonction `missionTemporelleComplexe()`**
-2. **Exécute cette séquence de missions** (dans l'ordre) :
-   - Tâche 1 : Voyager à l'époque "medievale"
-   - Tâche 2 : Collecter "épée de chevalier"
-   - Tâche 3 : Voyager à l'époque "romaine"
-   - Tâche 4 : Collecter "bouclier romain"
-   - Tâche 5 : Collecter "épée romaine"
-3. **Utilise `console.log()` à chaque étape** pour observer l'exécution
-4. **Imbrique les callbacks** pour garantir l'ordre d'exécution
+**Crée une nouvelle fonction `missionTemporelleComplexe()`**
+
+Cette fonction doit exécuter une série de tâches asynchrones **dans l'ordre strict**.
+
+- **Séquence à exécuter** (chaque tâche doit attendre que la précédente soit terminée) :
+  1. Voyager à l'époque "medievale" (utilise `voyagerTemps()`)
+  2. Collecter "épée de chevalier" (utilise `collecterArtefact()`)
+  3. Voyager à l'époque "romaine" (utilise `voyagerTemps()`)
+  4. Collecter "bouclier romain" (utilise `collecterArtefact()`)
+  5. Collecter "épée romaine" (utilise `collecterArtefact()`)
+
+- **Comment garantir l'ordre** :
+  - Imbrique les callbacks : chaque callback contient l'appel à la fonction suivante
+
+- **Ajoute des `console.log()`** à chaque étape pour observer l'ordre d'exécution
+
+⚠️ **Note** : Le code va devenir très imbriqué ("callback hell"). C'est normal, c'est le problème que tu vas résoudre dans l'exercice suivant !
 
 💡 **Ce que tu vas apprendre** :
+
 - Callbacks imbriqués (callback hell)
 - Exécution séquentielle de tâches asynchrones
 - Problème de lisibilité du code avec callbacks
@@ -189,6 +238,7 @@ Page : Quand tu recherches un artefact, un loader apparaît puis l'artefact s'af
 💡 **Astuce** : Chaque callback contient l'appel à la fonction suivante. Le code prend une forme pyramidale.
 
 💡 **Résultat attendu** :
+
 ```
 Console : Les messages s'affichent dans l'ordre des tâches, avec un code très imbriqué
 ```
@@ -205,19 +255,45 @@ Console : Les messages s'affichent dans l'ordre des tâches, avec un code très 
 
 **Consignes** :
 
-1. **Réécris `voyagerTemps(destination)` pour retourner une Promesse** :
-   - Retourne `new Promise((resolve, reject) => { ... })`
-   - Appelle `resolve()` quand le voyage est terminé
-   
-2. **Réécris `collecterArtefact(nomArtefact)` pour retourner une Promesse** :
-   - Appelle `resolve(true)` si la collecte réussit
-   - Appelle `reject("Échec de la collecte")` si elle échoue
+**Partie 1 : Transforme `voyagerTemps(destination)` en version Promesse**
 
-3. **Réécris `missionTemporelleComplexe()` avec le chaînage de Promesses** :
-   - Utilise `.then()` pour chaîner les tâches
-   - Utilise `.catch()` pour gérer les erreurs
+Réécris la fonction pour qu'elle retourne une Promesse au lieu d'utiliser un callback.
+
+- **Signature** : `function voyagerTemps(destination)` (plus de paramètre callback)
+- **Retourne** : `new Promise((resolve, reject) => { ... })`
+- **Dans la Promesse** :
+  - Garde le même code avec `setTimeout()`
+  - Au lieu d'appeler `callback()`, appelle `resolve()` quand le voyage est terminé
+
+**Partie 2 : Transforme `collecterArtefact(nomArtefact)` en version Promesse**
+
+Réécris la fonction pour qu'elle retourne une Promesse.
+
+- **Signature** : `function collecterArtefact(nomArtefact)` (plus de paramètre callback)
+- **Retourne** : `new Promise((resolve, reject) => { ... })`
+- **Dans la Promesse** :
+  - Garde le même code avec `setTimeout()` et le nombre aléatoire
+  - **Si succès** (>= 50) : appelle `resolve(true)`
+  - **Si échec** (< 50) : appelle `reject("Échec de la collecte")`
+
+**Partie 3 : Réécris `missionTemporelleComplexe()` avec le chaînage de Promesses**
+
+Remplace les callbacks imbriqués par un chaînage `.then()`.
+
+- **Structure** :
+  ```js
+  voyagerTemps("medievale")
+    .then(() => collecterArtefact("épée de chevalier"))
+    .then(() => voyagerTemps("romaine"))
+    .then(() => collecterArtefact("bouclier romain"))
+    .then(() => collecterArtefact("épée romaine"))
+    .catch((erreur) => console.error("Erreur :", erreur));
+  ```
+
+⚠️ **Important** : N'oublie pas le `.catch()` à la fin pour gérer les erreurs (collectes échouées)
 
 💡 **Ce que tu vas apprendre** :
+
 - Création de Promesses avec `new Promise()`
 - Chaînage avec `.then()`
 - Gestion d'erreurs avec `.catch()`
@@ -226,6 +302,7 @@ Console : Les messages s'affichent dans l'ordre des tâches, avec un code très 
 💡 **Astuce** : Chaque `.then()` peut retourner une nouvelle Promesse pour continuer le chaînage.
 
 💡 **Résultat attendu** :
+
 ```
 Console : Même résultat qu'avant, mais le code est linéaire et plus lisible
 ```
@@ -242,18 +319,40 @@ Console : Même résultat qu'avant, mais le code est linéaire et plus lisible
 
 **Consignes** :
 
-1. **Rends `missionTemporelleComplexe()` asynchrone** :
-   - Ajoute le mot-clé `async` devant la fonction
-   
-2. **Remplace les `.then()` par `await`** :
-   - `await voyagerTemps("medievale")`
-   - `await collecterArtefact("épée de chevalier")`
-   - etc.
+**Transforme `missionTemporelleComplexe()` pour utiliser async/await**
 
-3. **Gère les erreurs avec `try/catch`** :
-   - Entoure le code de `try { ... } catch (erreur) { ... }`
+Réécris la fonction en utilisant la syntaxe moderne async/await au lieu du chaînage `.then()`.
+
+**Étape 1 : Rends la fonction asynchrone**
+
+- Ajoute le mot-clé `async` devant la déclaration : `async function missionTemporelleComplexe() { ... }`
+
+**Étape 2 : Remplace les `.then()` par `await`**
+
+- Au lieu de chaîner avec `.then()`, écris le code de manière séquentielle :
+  ```js
+  await voyagerTemps("medievale");
+  await collecterArtefact("épée de chevalier");
+  await voyagerTemps("romaine");
+  await collecterArtefact("bouclier romain");
+  await collecterArtefact("épée romaine");
+  ```
+
+**Étape 3 : Gère les erreurs avec `try/catch`**
+
+- Entoure tout le code de la fonction avec :
+  ```js
+  try {
+    // Ton code avec await
+  } catch (erreur) {
+    console.error("Erreur :", erreur);
+  }
+  ```
+
+💡 **Résultat** : Le code asynchrone ressemble maintenant à du code synchrone, beaucoup plus lisible !
 
 💡 **Ce que tu vas apprendre** :
+
 - Syntaxe `async/await`
 - Gestion d'erreurs avec `try/catch`
 - Code asynchrone qui ressemble à du code synchrone
@@ -261,6 +360,7 @@ Console : Même résultat qu'avant, mais le code est linéaire et plus lisible
 💡 **Astuce** : `await` ne fonctionne que dans une fonction `async`. Il "attend" que la Promesse soit résolue avant de continuer.
 
 💡 **Résultat attendu** :
+
 ```
 Console : Même résultat, mais le code est encore plus simple et lisible
 ```
@@ -277,15 +377,32 @@ Console : Même résultat, mais le code est encore plus simple et lisible
 
 **Consignes** :
 
-1. **Dans la fonction `main()`, remplace les époques en dur** :
-   - Utilise `fetch('data/epoques.json')` pour charger le fichier
-   - Convertis la réponse en JSON avec `.json()`
-   - Stocke le résultat dans la constante `epoques`
-   - Appelle `creerLesChoixEpoque(epoques)` avec les données chargées
+**Modifie la fonction `main()` (fonction existante) pour charger les époques depuis un fichier JSON**
 
-2. **Rends `main()` asynchrone** pour utiliser `await`
+Actuellement, les époques sont définies en dur dans le code. Tu dois les charger depuis `data/epoques.json`.
+
+**Étape 1 : Rends `main()` asynchrone**
+
+- Ajoute `async` devant la fonction : `async function main() { ... }`
+
+**Étape 2 : Charge le fichier JSON avec `fetch()`**
+
+- Remplace la définition en dur des époques par :
+  ```js
+  const response = await fetch("data/epoques.json");
+  const epoques = await response.json();
+  ```
+
+**Étape 3 : Utilise les données chargées**
+
+- Appelle `creerLesChoixEpoque(epoques)` avec les données chargées (cette ligne existe déjà)
+
+💡 **Astuce** : `fetch()` retourne une Promesse qui donne une Response. La méthode `.json()` retourne aussi une Promesse qui donne les données parsées. C'est pourquoi tu dois utiliser `await` deux fois.
+
+💡 **Pour vérifier** : Ouvre les DevTools (F12) → onglet Network → recharge la page → tu devrais voir une requête vers `epoques.json`
 
 💡 **Ce que tu vas apprendre** :
+
 - `fetch()` : faire des requêtes HTTP
 - `.json()` : parser une réponse JSON
 - Chargement de données externes
@@ -294,6 +411,7 @@ Console : Même résultat, mais le code est encore plus simple et lisible
 💡 **Astuce** : `fetch()` retourne une Promesse. La méthode `.json()` retourne aussi une Promesse, donc tu dois utiliser `await` deux fois.
 
 💡 **Résultat attendu** :
+
 ```
 Page : Les époques se chargent depuis le fichier JSON
 Network (DevTools) : Tu vois la requête HTTP vers data/epoques.json
