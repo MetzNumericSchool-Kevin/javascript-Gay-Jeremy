@@ -87,6 +87,9 @@ let nomEpoqueActuelle;
 // ✍️ TON CODE ICI
 // Crée la fonction voyagerTemps(destination, callback)
 // Utilise setTimeout() avec generationNombreAleatoireEntre(1000, 3000)
+function voyagerTemps(destination, callback) {
+
+}
 
 // Fonction appelée quand le formulaire de voyage temporel est envoyé
 function quandEpoqueChoisie(nomEpoque) {
@@ -97,6 +100,8 @@ function quandEpoqueChoisie(nomEpoque) {
   // Utilise voyagerTemps() ici
   // Avant le voyage : cache .localisation_epoque et affiche .voyage_en_cours
   // Après le voyage (callback) : cache le loader et appelle afficherDestination()
+
+voyagerTemps(quandEpoqueChoisie)
 }
 
 // ============================================
